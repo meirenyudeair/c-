@@ -1,0 +1,160 @@
+#include <iostream>
+using namespace std;
+struct Lnode
+{
+    int data;
+    struct Lnode *next;
+};
+typedef struct Lnode*Linklist;
+void createlist(Linklist &L,int n)
+{
+    L=new Lnode;
+    L->next=NULL;
+    cout<<"input the Linklist value:\n";
+    for(int i=0;i<n;i++)
+    {
+        Linklist p=new Lnode;
+        cin>>p->data;
+        p->next=L->next;
+        L->next=p;
+    }
+}
+void displist(Linklist L)
+{
+    Linklist p=L->next;
+    while(p)
+    {
+        cout<<"->"<<p->data;
+        p=p->next;
+    }
+}
+bool searchlist(Linklist &L,int e)
+{
+    Linklist p=L->next;
+        while(p && p->data!=e)
+            return false;
+        p=p->next;
+        return true;
+}
+int insertlist(Linklist &L,int i,int x)
+{
+    Linklist p=L;
+    int j=0;
+    while(p && (j<i-1))
+    {
+        p=p->next;
+        ++j;
+    }
+        if(!p||j>i-1)
+            return 0;
+    Linklist s=new Lnode;
+    s->data=x;
+    s->next=p->next;
+    p->next=s;
+    cout<<"->"<<p->data;
+    cout<<endl;
+
+    p=p->next;
+    return 0;
+}
+bool deletelist(Linklist &L,int a)
+{
+    Linklist p =L;
+    int y=0;
+    Linklist q =new Lnode;
+    while((p->next) && (y<a-1))
+    {
+        p=p->next;
+        ++y;
+    }
+    if(!(p->next)||(y>a-1))
+        return false;
+    q=p->next;
+    p->next=q->next;
+    delete q;
+    return true;
+}
+void createlist1(Linklist &L1,int b)
+{
+    L1=new Lnode;
+    L1->next=NULL;
+    cout<<"input the Linklist value:\n";
+    for(int i=0;i<b;i++)
+    {
+        Linklist p1=new Lnode;
+        cin>>p1->data;
+        p1->next=L1->next;
+        L1->next=p1;
+    }
+}
+void Mergelist(Linklist &L,Linklist &L1,Linklist &L2)
+{
+    Linklist p=L->next;
+    Linklist p1=L1->next;
+    L2=L;
+    Linklist p2=L2;
+    while(p&&p2)
+    {
+        if(p->data <= p1->data)
+        {
+            p2->next=p;
+            p2=p;
+            p=p->next;
+        }
+         
+        else
+        {
+            p2->next=p1;
+            p2=p1;
+            p1=p1->next;
+        }
+    }
+    p2->next=p?p:p1;
+    delete L1;
+}
+void displist1(Linklist L1)
+{
+    Linklist p1=L1->next;
+    while(p1)
+    {
+        cout<<"->"<<p1->data;
+        p1=p1->next;
+    }
+}
+int main()
+{
+    int n;
+    cout<<"input the linklist's length:";
+    cin>>n;
+    Linklist L;
+    createlist(L,n);
+    displist(L);
+    cout<<"input the search element:";
+    int e;
+    cin>>e;
+    int place=searchlist(L,e);
+    if(place) cout<<e<<"is the"<<place<<"elem\n";
+    else cout<<"search fail\n";
+    int i,x;
+    cout<<"input the insert place and value:\n";
+    cin>>i>>x;
+    insertlist(L,i,x);
+    displist(L);
+    int a;
+    cout<<"请输入要删除的位置";
+    cin>>a;
+    deletelist(L,a);
+    displist(L);
+    int b;
+    cout<<"input the Linklist1's length:";
+    cout<<endl;
+    cin>>b;
+    Linklist L1;
+    createlist1(L1,b);
+    displist1(L1);
+    cout<<endl;
+    Linklist L2;
+    cout<<"合并链表的结果:"<<endl;
+    Mergelist(L,L1,L2);
+    displist1(L2);
+}
