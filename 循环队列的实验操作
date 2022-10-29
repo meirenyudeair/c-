@@ -1,0 +1,192 @@
+#include <iostream>
+using namespace std;
+#define MAXSIZE 100
+struct Queue
+{
+    int *base;
+    int front;
+    int rear;
+};
+
+bool InitQueue(Queue &Q)//创造一个队列
+{
+    Q.base=new int[MAXSIZE];
+    if(!Q.base)
+        return false;
+    Q.front=Q.rear=0;
+    return true;
+}
+int QueueLength(Queue Q)//求队列的长
+{
+    return (Q.rear-Q.front+MAXSIZE)%MAXSIZE;
+}
+bool putQueue(Queue &Q,int &e)//入队
+{
+    if((Q.rear+1)%MAXSIZE==Q.front)
+        return false;
+    Q.base[Q.rear]=e;
+    Q.rear=(Q.rear+1)%MAXSIZE;
+    return true;
+}
+bool chuQueue(Queue &Q,int &e)//出队
+{
+    if(Q.front==Q.rear)
+        return false;
+    e=Q.base[Q.front];
+    Q.front=(Q.front+1)%MAXSIZE;
+    return true;
+}
+bool printQueue(Queue Q)
+{
+    cout<<"当前队列 ";
+        if(Q.rear==Q.front)
+            return false;
+        while (Q.front!=Q.rear)
+        {
+            cout<<Q.base[Q.front];
+            Q.front=(Q.front+1)%MAXSIZE;
+        }
+        cout<<endl;
+    return true;
+}
+int main()
+{
+        Queue Q;
+        int i;
+       if(InitQueue(Q))
+          cout <<"初始化成功"<<endl;
+       else
+          cout<<"初始化失败"<<endl;
+        while(1)
+        {
+            cout << "接下来的操作: 1.入队   2.出队   3.打印队   4.队的长 0.退出" << endl;
+            cout << "请输入要执行的操作：";
+            cin >> i;
+            switch (i)
+            {
+            
+            case 1:
+                int e;
+                cout << "请输入要入队的值：";
+                cin >> e;
+                    if(putQueue(Q,e))
+                        cout <<"入队成功"<<endl;
+                     else
+                        cout<<"入队失败"<<endl;
+                    break;
+            case 2:
+                chuQueue(Q,e);
+                break;
+            case 3:
+                cout << "打印队列" << endl;
+                printQueue(Q);
+                break;
+            case 4:
+                int len;
+                len=QueueLength(Q);
+                cout<<"长度"<<len;
+                break;
+            case 0: return 1;
+            default:
+                    return 1;
+            }
+        }
+}
+//两种方法任选,虽然差不多😼
+
+
+#include <iostream>
+#include <iomanip>
+using namespace std;
+#define MAXSIZE 100
+struct Queue
+{
+    int *base;
+    int front;
+    int rear;
+};
+
+bool InitQueue(Queue &Q)//创造一个队列
+{
+    Q.base=new int[MAXSIZE];
+    if(!Q.base)
+        return false;
+    Q.front=Q.rear=0;
+    return true;
+}
+int QueueLength(Queue Q)//求队列的长
+{
+    return (Q.rear-Q.front+MAXSIZE)%MAXSIZE;
+}
+bool putQueue(Queue &Q,int &e)//入队
+{
+    if((Q.rear+1)%MAXSIZE==Q.front)
+        return false;
+    Q.base[Q.rear]=e;
+    Q.rear=(Q.rear+1)%MAXSIZE;
+    return true;
+}
+bool chuQueue(Queue &Q,int &e)//出队
+{
+    if(Q.front==Q.rear)
+        return false;
+    Q.front=(Q.front+1)%MAXSIZE;
+    return true;
+}
+bool printQueue(Queue Q)
+{
+    cout<<"当前队列";
+        if(Q.rear==Q.front)
+            return false;
+        while (Q.front!=Q.rear)
+        {
+            cout<<Q.base[Q.front];
+            Q.front=(Q.front+1)%MAXSIZE;
+        }
+        cout<<endl;
+    return true;
+}
+int main()
+{
+        
+        Queue Q;
+        int i;
+        InitQueue(Q);
+        do
+        {
+            cout<<"*********************************************************"<<endl;
+            cout << "  接下来的操作: 1.入队   2.出队   3.打印队   4.队的长 0.退出" << endl;
+            cout << "请输入要执行的操作：";
+            cin >> i;
+            switch (i)
+            {
+            
+            case 1:
+                int e;
+                cout << "请输入要入队的值：";
+                cin >> e;
+                    putQueue(Q,e);
+                break;
+            case 2:
+                chuQueue(Q,e);
+                cout<<"出队成功"<<endl;
+                break;
+            case 3:
+                cout << "打印队列" << endl;
+                printQueue(Q);
+                break;
+            case 4:
+                int len;
+                len=QueueLength(Q);
+                cout<<"长度"<<len;
+                cout<<endl;
+                break;
+            default:
+                cout << "退出成功" << endl;
+                break;
+            }
+        } while (i != 0);
+        system("pause");//系统调用停止窗口;system("pause")  的作用就是使控制台暂停运行程序，暂停之后会提示你按下任意键继续，这样方便用户梳理程序运行的过程
+        return 0;
+   
+}
